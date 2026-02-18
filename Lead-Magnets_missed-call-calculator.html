@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missed Call Cost Calculator | NeverMiss Hawaii</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #1e3d6f 0%, #2c5aa0 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 600px;
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 16px;
+            opacity: 0.95;
+            line-height: 1.5;
+        }
+        
+        .calculator {
+            padding: 40px 30px;
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 15px;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .input-group input:focus {
+            outline: none;
+            border-color: #ff6b35;
+        }
+        
+        .input-group .help-text {
+            font-size: 13px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .calculate-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 10px;
+        }
+        
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255,107,53,0.4);
+        }
+        
+        .results {
+            display: none;
+            margin-top: 30px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border-left: 5px solid #ff6b35;
+        }
+        
+        .results.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .results h2 {
+            color: #1e3d6f;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+        
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .result-item .label {
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .result-item .value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ff6b35;
+        }
+        
+        .result-item.annual .value {
+            font-size: 28px;
+            color: #1e3d6f;
+        }
+        
+        .cta-section {
+            margin-top: 30px;
+            padding: 30px;
+            background: linear-gradient(135deg, #1e3d6f 0%, #2c5aa0 100%);
+            color: white;
+            text-align: center;
+            border-radius: 12px;
+        }
+        
+        .cta-section h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .cta-section p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+        
+        .cta-btn {
+            display: inline-block;
+            padding: 16px 40px;
+            background: #4ade80;
+            color: #1e3d6f;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 16px;
+            transition: transform 0.2s;
+        }
+        
+        .cta-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .disclaimer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #999;
+            background: #f5f5f5;
+        }
+        
+        .stats-preview {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ff6b35;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .calculator {
+                padding: 30px 20px;
+            }
+            
+            .stats-preview {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💰 Missed Call Cost Calculator</h1>
+            <p>Most contractors lose $2,000–$10,000 per month to missed calls. Find out exactly how much you're losing in 30 seconds.</p>
+        </div>
+        
+        <div class="calculator">
+            <div class="input-group">
+                <label for="jobsPerWeek">How many jobs do you complete per week?</label>
+                <input type="number" id="jobsPerWeek" placeholder="e.g., 8" min="0">
+                <div class="help-text">Average number of jobs you complete weekly</div>
+            </div>
+            
+            <div class="input-group">
+                <label for="avgJobValue">What's your average job value?</label>
+                <input type="number" id="avgJobValue" placeholder="e.g., 850" min="0">
+                <div class="help-text">Average revenue per job ($)</div>
+            </div>
+            
+            <div class="input-group">
+                <label for="missedCalls">How many calls do you miss per week?</label>
+                <input type="number" id="missedCalls" placeholder="e.g., 5" min="0">
+                <div class="help-text">Calls that go to voicemail or unanswered</div>
+            </div>
+            
+            <div class="input-group">
+                <label for="closeRate">What's your close rate?</label>
+                <input type="number" id="closeRate" placeholder="e.g., 40" min="0" max="100">
+                <div class="help-text">Percentage of calls that become jobs (%)</div>
+            </div>
+            
+            <button class="calculate-btn" onclick="calculateLoss()">
+                Calculate My Losses →
+            </button>
+            
+            <div class="results" id="results">
+                <h2>📊 Your Results</h2>
+                
+                <div class="result-item">
+                    <span class="label">Weekly Revenue Lost</span>
+                    <span class="value" id="weeklyLoss">$0</span>
+                </div>
+                
+                <div class="result-item">
+                    <span class="label">Monthly Revenue Lost</span>
+                    <span class="value" id="monthlyLoss">$0</span>
+                </div>
+                
+                <div class="result-item annual">
+                    <span class="label">Annual Revenue Lost</span>
+                    <span class="value" id="annualLoss">$0</span>
+                </div>
+                
+                <div class="stats-preview">
+                    <div class="stat">
+                        <div class="stat-number" id="missedJobs">0</div>
+                        <div class="stat-label">Jobs Lost/Month</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number" id="answerRate">0%</div>
+                        <div class="stat-label">Current Answer Rate</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cta-section" id="ctaSection" style="display: none;">
+                <h3>🚨 Stop Losing Money to Missed Calls</h3>
+                <p>NeverMiss contractors capture 80% of those lost calls with our 24/7 AI receptionist. That's potentially <strong id="potentialSavings">$0</strong> back in your pocket every month.</p>
+                <a href="sms:8087243713?body=SAVE" class="cta-btn">Text "SAVE" to 808-724-3713</a>
+                <p style="margin-top: 15px; font-size: 14px; opacity: 0.9;">Get instant access to: "5 Ways to Never Miss Another $500-$1,500 Job"</p>
+            </div>
+        </div>
+        
+        <div class="disclaimer">
+            This calculator provides estimates based on industry averages. Actual results may vary. © 2026 NeverMiss Hawaii
+        </div>
+    </div>
+    
+    <script>
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                maximumFractionDigits: 0
+            }).format(amount);
+        }
+        
+        function calculateLoss() {
+            // Get input values
+            const jobsPerWeek = parseFloat(document.getElementById('jobsPerWeek').value) || 0;
+            const avgJobValue = parseFloat(document.getElementById('avgJobValue').value) || 0;
+            const missedCalls = parseFloat(document.getElementById('missedCalls').value) || 0;
+            const closeRate = parseFloat(document.getElementById('closeRate').value) || 0;
+            
+            // Validation
+            if (jobsPerWeek === 0 || avgJobValue === 0) {
+                alert('Please enter your average jobs per week and job value');
+                return;
+            }
+            
+            // Calculate current answer rate
+            const totalCalls = jobsPerWeek / (closeRate / 100);
+            const answerRate = ((totalCalls - missedCalls) / totalCalls * 100);
+            
+            // Calculate losses
+            const weeklyLoss = missedCalls * (closeRate / 100) * avgJobValue;
+            const monthlyLoss = weeklyLoss * 4.33; // Average weeks per month
+            const annualLoss = monthlyLoss * 12;
+            const missedJobsPerMonth = (missedCalls * (closeRate / 100) * 4.33).toFixed(1);
+            
+            // Display results
+            document.getElementById('weeklyLoss').textContent = formatCurrency(weeklyLoss);
+            document.getElementById('monthlyLoss').textContent = formatCurrency(monthlyLoss);
+            document.getElementById('annualLoss').textContent = formatCurrency(annualLoss);
+            document.getElementById('missedJobs').textContent = missedJobsPerMonth;
+            document.getElementById('answerRate').textContent = Math.max(0, answerRate).toFixed(0) + '%';
+            document.getElementById('potentialSavings').textContent = formatCurrency(monthlyLoss * 0.8);
+            
+            // Show results and CTA
+            document.getElementById('results').classList.add('show');
+            document.getElementById('ctaSection').style.display = 'block';
+            
+            // Scroll to results
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        
+        // Allow Enter key to calculate
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    calculateLoss();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
