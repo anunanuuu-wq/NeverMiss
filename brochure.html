@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeverMiss Hawaii &mdash; Digital Brochure</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* ===== CSS VARIABLES — SCREEN (DARK) ===== */
+        :root {
+            --bg:           #100f0d;
+            --bg-2:         #1a1714;
+            --bg-3:         #221f1b;
+            --accent:       #e8a04a;
+            --accent-deep:  #d97706;
+            --accent-pale:  rgba(232, 160, 74, 0.1);
+            --text:         #f5efe8;
+            --text-2:       #b8a898;
+            --text-3:       #7a6a58;
+            --success:      #52c97a;
+            --border:       rgba(232, 160, 74, 0.13);
+            --border-2:     rgba(232, 160, 74, 0.30);
+            --shadow:       0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        /* ===== CSS VARIABLES — PRINT (LIGHT) ===== */
+        @media print {
+            :root {
+                --bg:       #ffffff;
+                --bg-2:     #faf7f2;
+                --bg-3:     #f2ebe0;
+                --text:     #1a1410;
+                --text-2:   #4a3f35;
+                --text-3:   #8a7a6a;
+                --border:   rgba(180, 130, 60, 0.18);
+                --border-2: rgba(180, 130, 60, 0.35);
+                --shadow:   none;
+            }
+
+            body { background: white !important; }
+
+            .page {
+                box-shadow: none !important;
+                margin: 0 !important;
+                page-break-after: always;
+                break-after: page;
+            }
+
+            .cover::before,
+            .cover::after { display: none !important; }
+
+            * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
+
+        /* ===== BASE ===== */
+        body {
+            font-family: 'Sora', sans-serif;
+            background: #0a0908;
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            max-width: 210mm;
+            margin: 24px auto;
+            background: var(--bg);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ===== SHARED ===== */
+        .eyebrow {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 36px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .wordmark {
+            font-family: 'Playfair Display', serif;
+            font-size: 17px;
+            font-weight: 800;
+        }
+        .wm-never { color: var(--text); }
+        .wm-miss  { color: var(--accent); }
+
+        .page-num {
+            font-size: 11px;
+            color: var(--text-3);
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .page-footer {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .footer-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .footer-detail {
+            font-size: 11px;
+            color: var(--text-3);
+            line-height: 1.6;
+        }
+
+        .footer-tagline {
+            font-size: 11px;
+            color: var(--text-3);
+            text-align: right;
+            line-height: 1.6;
+        }
+
+        /* ===== PAGE 1: COVER ===== */
+        .cover {
+            min-height: 297mm;
+            padding: 44px 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Dot grid */
+        .cover::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle, rgba(232,160,74,0.08) 1px, transparent 1px);
+            background-size: 30px 30px;
+            pointer-events: none;
+            mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, black 0%, transparent 100%);
+            -webkit-mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, black 0%, transparent 100%);
+        }
+
+        /* Warm glow */
+        .cover::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 55% 50% at 15% 65%, rgba(232,160,74,0.06) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .cover-top {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cover-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cover-brand-icon {
+            width: 34px;
+            height: 34px;
+            background: var(--accent-pale);
+            border: 1px solid var(--border-2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cover-brand-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .cover-pill {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border: 1px solid var(--border-2);
+            padding: 5px 12px;
+            border-radius: 100px;
+        }
+
+        .cover-body {
+            position: relative;
+            z-index: 1;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 44px 0 36px;
+        }
+
+        .cover-h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 54px;
+            font-weight: 800;
+            line-height: 1.04;
+            letter-spacing: -0.02em;
+            color: var(--text);
+            margin-bottom: 22px;
+        }
+
+        .cover-h1 em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .cover-sub {
+            font-size: 16px;
+            color: var(--text-2);
+            line-height: 1.75;
+            max-width: 400px;
+            margin-bottom: 40px;
+        }
+
+        .cover-stats {
+            display: flex;
+            gap: 36px;
+        }
+
+        .cstat-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 3px;
+        }
+
+        .cstat-label {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-3);
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+        }
+
+        .cover-problem {
+            position: relative;
+            z-index: 1;
+            background: var(--bg-2);
+            border: 1px solid var(--border-2);
+            border-left: 3px solid var(--accent);
+            border-radius: 12px;
+            padding: 22px 26px;
+        }
+
+        .cover-problem-label {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .cover-problem p {
+            font-size: 14px;
+            color: var(--text-2);
+            line-height: 1.72;
+        }
+
+        /* ===== CONTENT PAGES ===== */
+        .content-page {
+            min-height: 297mm;
+            padding: 44px 48px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.15;
+            margin-bottom: 10px;
+        }
+
+        .section-sub {
+            font-size: 14px;
+            color: var(--text-2);
+            line-height: 1.72;
+            margin-bottom: 28px;
+        }
+
+        .intro-block {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent);
+            border-radius: 10px;
+            padding: 18px 22px;
+            font-size: 14px;
+            color: var(--text-2);
+            line-height: 1.75;
+            margin-bottom: 28px;
+        }
+
+        .intro-block strong { color: var(--text); }
+
+        /* Two modes */
+        .modes-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .mode-card {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 22px;
+        }
+
+        .mode-card.featured { border-color: var(--border-2); background: var(--bg-3); }
+
+        .mode-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 30px;
+            font-weight: 800;
+            color: rgba(232,160,74,0.2);
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .mode-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 3px;
+        }
+
+        .mode-tag {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .mode-card p {
+            font-size: 13px;
+            color: var(--text-2);
+            line-height: 1.65;
+        }
+
+        .mode-industries {
+            font-size: 11px;
+            color: var(--text-3);
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* How it works */
+        .flow-block {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 22px 26px;
+            flex: 1;
+        }
+
+        .flow-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text);
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        .flow-steps {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+        }
+
+        .flow-step { text-align: center; flex: 1; }
+
+        .flow-circle {
+            width: 34px;
+            height: 34px;
+            background: var(--bg-3);
+            border: 1px solid var(--border-2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--accent);
+            margin: 0 auto 8px;
+        }
+
+        .flow-step h4 {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 3px;
+        }
+
+        .flow-step p { font-size: 10px; color: var(--text-3); }
+
+        .flow-arr { color: var(--border-2); font-size: 16px; flex-shrink: 0; }
+
+        /* ===== PAGE 3: FEATURES ===== */
+        .feat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .feat-item {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px 18px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .feat-n {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            font-weight: 800;
+            color: rgba(232,160,74,0.22);
+            line-height: 1;
+            flex-shrink: 0;
+            width: 22px;
+        }
+
+        .feat-item h4 {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 3px;
+        }
+
+        .feat-item p {
+            font-size: 11px;
+            color: var(--text-2);
+            line-height: 1.55;
+        }
+
+        .guarantee-block {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--success);
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin-bottom: 18px;
+        }
+
+        .guarantee-block h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--success);
+            margin-bottom: 6px;
+        }
+
+        .guarantee-block p {
+            font-size: 13px;
+            color: var(--text-2);
+            line-height: 1.65;
+        }
+
+        .ind-section h4 {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text);
+            text-align: center;
+            margin-bottom: 12px;
+            letter-spacing: 0.02em;
+        }
+
+        .ind-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            justify-content: center;
+        }
+
+        .ind-tag {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            padding: 4px 11px;
+            border-radius: 100px;
+            font-size: 11px;
+            color: var(--text-2);
+        }
+
+        /* ===== PAGE 4: PRICING ===== */
+        .pricing-card {
+            background: var(--bg-2);
+            border: 2px solid var(--accent);
+            border-radius: 16px;
+            padding: 28px 32px;
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .pricing-card-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: var(--bg);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 4px 14px;
+            border-radius: 100px;
+            white-space: nowrap;
+        }
+
+        .pricing-tier {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-3);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .pricing-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 60px;
+            font-weight: 800;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .pricing-cadence {
+            font-size: 13px;
+            color: var(--text-3);
+            margin-bottom: 14px;
+        }
+
+        .pricing-free {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(82,201,122,0.1);
+            border: 1px solid rgba(82,201,122,0.2);
+            color: var(--success);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 5px 14px;
+            border-radius: 100px;
+        }
+
+        .roi-block {
+            background: var(--bg-3);
+            border: 1px solid var(--border-2);
+            border-radius: 10px;
+            padding: 16px 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .roi-block h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 5px;
+        }
+
+        .roi-block p {
+            font-size: 13px;
+            color: var(--text-2);
+            line-height: 1.6;
+        }
+
+        /* Comparison table */
+        .comp-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+
+        .comp-table th {
+            background: var(--bg-3);
+            color: var(--text-3);
+            font-weight: 700;
+            padding: 9px 12px;
+            text-align: left;
+            font-size: 10px;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border-2);
+        }
+
+        .comp-table td {
+            padding: 11px 12px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-3);
+        }
+
+        .comp-table .feat-row td {
+            color: var(--text);
+            font-weight: 600;
+            background: rgba(232,160,74,0.04);
+        }
+
+        .comp-table .feat-row td:first-child { color: var(--accent); }
+
+        .good { color: var(--success) !important; font-weight: 700 !important; }
+    </style>
+</head>
+<body>
+
+    <!-- PAGE 1: COVER -->
+    <div class="page cover">
+        <div class="cover-top">
+            <div class="cover-brand">
+                <div class="cover-brand-icon">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                        <path d="M3 13C3 9.686 5.686 7 9 7C12.314 7 15 9.686 15 13" stroke="#e8a04a" stroke-width="1.5" stroke-linecap="round"/>
+                        <circle cx="9" cy="13" r="1.5" fill="#e8a04a"/>
+                        <path d="M3 13L1.5 14.5" stroke="#e8a04a" stroke-width="1.5" stroke-linecap="round"/>
+                        <path d="M15 13L16.5 14.5" stroke="#e8a04a" stroke-width="1.5" stroke-linecap="round"/>
+                        <line x1="9" y1="4" x2="9" y2="6" stroke="#e8a04a" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="cover-brand-text">
+                    <span class="wm-never">Never</span><span class="wm-miss">Miss</span>
+                </div>
+            </div>
+            <div class="cover-pill">Digital Brochure &mdash; 2026</div>
+        </div>
+
+        <div class="cover-body">
+            <div class="eyebrow">For Service Businesses in Hawaii &amp; California</div>
+            <h1 class="cover-h1">Every Missed Call<br>is <em>Missed Revenue.</em></h1>
+            <p class="cover-sub">NeverMiss is a 24/7 AI receptionist that answers every inbound call, books appointments, and qualifies leads — so you never lose revenue to voicemail again.</p>
+            <div class="cover-stats">
+                <div><div class="cstat-num">$300</div><div class="cstat-label">Per Month</div></div>
+                <div><div class="cstat-num">24/7</div><div class="cstat-label">Coverage</div></div>
+                <div><div class="cstat-num">48 hrs</div><div class="cstat-label">Setup</div></div>
+                <div><div class="cstat-num">30-Day</div><div class="cstat-label">Guarantee</div></div>
+            </div>
+        </div>
+
+        <div class="cover-problem">
+            <div class="cover-problem-label">The Problem</div>
+            <p>Every missed call is a missed opportunity. Whether you're with customers, in meetings, or it's after hours — when you can't answer, your competitor does. Most service businesses lose $2&ndash;5K per month without even knowing it.</p>
+        </div>
+    </div>
+
+    <!-- PAGE 2: SOLUTION -->
+    <div class="page content-page">
+        <div class="page-header">
+            <div class="wordmark"><span class="wm-never">Never</span><span class="wm-miss">Miss</span></div>
+            <span class="page-num">02 &mdash; The Solution</span>
+        </div>
+
+        <div class="eyebrow">What Is NeverMiss?</div>
+        <h2 class="section-title">Your AI Receptionist<br>That Never Sleeps</h2>
+
+        <div class="intro-block">
+            <strong>NeverMiss is a 24/7 professional call answering system</strong> that answers every inbound call, captures customer details, routes emergencies, and either books appointments directly or transfers hot leads — whichever fits how you run your business.
+        </div>
+
+        <div class="eyebrow" style="margin-bottom: 14px;">Choose Your Mode</div>
+        <div class="modes-grid">
+            <div class="mode-card featured">
+                <div class="mode-num">01</div>
+                <h3>Auto-Booking Mode</h3>
+                <div class="mode-tag">Best for Field Contractors</div>
+                <p>AI books appointments directly on your calendar. You get a text with customer details and appointment time. Just show up and close the deal.</p>
+                <p class="mode-industries">Plumbers &middot; Electricians &middot; HVAC &middot; Cleaners &middot; Mobile Services</p>
+            </div>
+            <div class="mode-card">
+                <div class="mode-num">02</div>
+                <h3>Lead Capture + Transfer</h3>
+                <div class="mode-tag">Best for Office-Based Owners</div>
+                <p>AI qualifies leads, captures all details, and transfers hot prospects to you immediately. You maintain control of the sales conversation.</p>
+                <p class="mode-industries">Dentists &middot; Lawyers &middot; Consultants &middot; High-Ticket Services</p>
+            </div>
+        </div>
+
+        <div class="flow-block">
+            <div class="flow-title">How It Works</div>
+            <div class="flow-steps">
+                <div class="flow-step">
+                    <div class="flow-circle">1</div>
+                    <h4>Customer Calls</h4>
+                    <p>Any time, day or night</p>
+                </div>
+                <div class="flow-arr">&rarr;</div>
+                <div class="flow-step">
+                    <div class="flow-circle">2</div>
+                    <h4>AI Answers</h4>
+                    <p>Within 10 seconds</p>
+                </div>
+                <div class="flow-arr">&rarr;</div>
+                <div class="flow-step">
+                    <div class="flow-circle">3</div>
+                    <h4>Captures Info</h4>
+                    <p>Name, needs, details</p>
+                </div>
+                <div class="flow-arr">&rarr;</div>
+                <div class="flow-step">
+                    <div class="flow-circle">4</div>
+                    <h4>Books or Transfers</h4>
+                    <p>You get notified instantly</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 3: FEATURES -->
+    <div class="page content-page">
+        <div class="page-header">
+            <div class="wordmark"><span class="wm-never">Never</span><span class="wm-miss">Miss</span></div>
+            <span class="page-num">03 &mdash; What's Included</span>
+        </div>
+
+        <div class="eyebrow">Everything You Need</div>
+        <h2 class="section-title" style="font-size:26px; margin-bottom:6px;">Complete Call Handling</h2>
+        <p class="section-sub">So you can focus on the customers already in front of you.</p>
+
+        <div class="feat-grid">
+            <div class="feat-item">
+                <div class="feat-n">01</div>
+                <div><h4>24/7 Call Answering</h4><p>Every call answered professionally, any time of day or night</p></div>
+            </div>
+            <div class="feat-item">
+                <div class="feat-n">02</div>
+                <div><h4>Instant Booking</h4><p>Appointments go directly to your calendar. No back-and-forth</p></div>
+            </div>
+            <div class="feat-item">
+                <div class="feat-n">03</div>
+                <div><h4>Lead Capture</h4><p>Complete customer details captured every single time</p></div>
+            </div>
+            <div class="feat-item">
+                <div class="feat-n">04</div>
+                <div><h4>Emergency Routing</h4><p>Hot leads and emergencies transferred to you immediately</p></div>
+            </div>
+            <div class="feat-item">
+                <div class="feat-n">05</div>
+                <div><h4>Custom Scripts</h4><p>AI trained for your specific business type and terminology</p></div>
+            </div>
+            <div class="feat-item">
+                <div class="feat-n">06</div>
+                <div><h4>Daily &amp; Weekly Reports</h4><p>See every call, booking, and lead in your inbox</p></div>
+            </div>
+            <div class="feat-item">
+                <div class="feat-n">07</div>
+                <div><h4>Missed-Call Text Rescue</h4><p>Texts back callers who don't leave info — recaptures lost leads</p></div>
+            </div>
+            <div class="feat-item">
+                <div class="feat-n">08</div>
+                <div><h4>Fast Setup</h4><p>Most systems go live within 48 hours of signing up</p></div>
+            </div>
+        </div>
+
+        <div class="guarantee-block">
+            <h3>30-Day Money-Back Guarantee</h3>
+            <p>Try NeverMiss completely risk-free. If you're not satisfied within 30 days, we'll refund 100% of your payment. No questions asked.</p>
+        </div>
+
+        <div class="ind-section">
+            <h4>Industries We Serve</h4>
+            <div class="ind-tags">
+                <span class="ind-tag">Plumbers</span>
+                <span class="ind-tag">Electricians</span>
+                <span class="ind-tag">HVAC</span>
+                <span class="ind-tag">Dentists</span>
+                <span class="ind-tag">Lawyers</span>
+                <span class="ind-tag">Cleaners</span>
+                <span class="ind-tag">Restaurants</span>
+                <span class="ind-tag">Salons</span>
+                <span class="ind-tag">Auto Shops</span>
+                <span class="ind-tag">Contractors</span>
+                <span class="ind-tag">Consultants</span>
+                <span class="ind-tag">+50 More</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 4: PRICING -->
+    <div class="page content-page">
+        <div class="page-header">
+            <div class="wordmark"><span class="wm-never">Never</span><span class="wm-miss">Miss</span></div>
+            <span class="page-num">04 &mdash; Pricing</span>
+        </div>
+
+        <div class="eyebrow">Simple, Transparent Pricing</div>
+        <h2 class="section-title" style="font-size:26px; margin-bottom:20px;">One Plan. Everything Included.</h2>
+
+        <div class="pricing-card">
+            <div class="pricing-card-badge">Beta &mdash; Only 5 Spots</div>
+            <div class="pricing-tier">Beta Founder Plan</div>
+            <div class="pricing-price">$300</div>
+            <div class="pricing-cadence">per month &middot; no contracts &middot; cancel anytime</div>
+            <div class="pricing-free">&#10003; FREE Setup During Beta (Save $300+)</div>
+        </div>
+
+        <div class="roi-block">
+            <h3>The ROI Is Simple</h3>
+            <p>One $400 job pays for the entire month.<br>Most businesses see ROI within the first week.</p>
+        </div>
+
+        <table class="comp-table">
+            <thead>
+                <tr>
+                    <th>Option</th>
+                    <th>Monthly Cost</th>
+                    <th>Coverage</th>
+                    <th>Books Appts?</th>
+                    <th>Setup Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Hire Receptionist</td>
+                    <td>$2,500&ndash;3,300</td>
+                    <td>9&ndash;5 only</td>
+                    <td>Sometimes</td>
+                    <td>2&ndash;3 months</td>
+                </tr>
+                <tr>
+                    <td>Answering Service</td>
+                    <td>$500&ndash;800</td>
+                    <td>Limited hrs</td>
+                    <td>No</td>
+                    <td>1&ndash;2 weeks</td>
+                </tr>
+                <tr class="feat-row">
+                    <td>NeverMiss</td>
+                    <td class="good">$300</td>
+                    <td class="good">24/7</td>
+                    <td class="good">Yes &mdash; Auto</td>
+                    <td class="good">48 hours</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="page-footer">
+            <div>
+                <div class="footer-name">Okeanu Kama &mdash; Founder</div>
+                <div class="footer-detail">okama@nevermisshawaii.com</div>
+                <div class="footer-detail">nevermisshawaii.com &middot; (808) 724-3713</div>
+            </div>
+            <div class="footer-tagline">
+                &copy; 2026 NeverMiss Hawaii<br>
+                24/7 Call Answering for Service Businesses
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
