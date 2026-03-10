@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeverMiss Hawaii — Sales Deck</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@5.1.0/dist/reveal.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+
+  <style>
+    /* ─── Brand Variables ─────────────────────────────────── */
+    :root {
+      --bg:      #100f0d;
+      --surf:    #1a1714;
+      --surf2:   #221f1b;
+      --accent:  #e8a04a;
+      --hover:   #d97706;
+      --text:    #f5efe8;
+      --muted:   #b8a898;
+      --muted2:  #7a6a58;
+      --border:  rgba(232,160,74,0.12);
+      --borders: rgba(232,160,74,0.28);
+      --success: #52c97a;
+      --r:       12px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ─── Reveal Overrides ────────────────────────────────── */
+    .reveal-viewport          { background: var(--bg); }
+    .reveal                   { font-family: 'Sora', sans-serif; color: var(--text); -webkit-font-smoothing: antialiased; }
+    .reveal .slides           { text-align: left; }
+    .reveal .slides section   { height: 100%; padding: 0; }
+    .reveal .progress         { height: 3px; background: rgba(232,160,74,0.12); }
+    .reveal .progress span    { background: var(--accent); transition: width 0.4s ease; }
+
+    /* ─── Slide Shell ─────────────────────────────────────── */
+    .slide {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      padding: 46px 64px 34px;
+      position: relative; overflow: hidden;
+    }
+
+    /* ─── Dot Grid Background ─────────────────────────────── */
+    .dot-bg::before {
+      content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      background-image: radial-gradient(circle, rgba(232,160,74,0.18) 1px, transparent 1px);
+      background-size: 30px 30px;
+      -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 20%, transparent 100%);
+              mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 20%, transparent 100%);
+    }
+    .dot-bg > * { position: relative; z-index: 1; }
+
+    /* ─── Left accent stripe ──────────────────────────────── */
+    .stripe-left::after {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+    }
+
+    /* ─── Typography ──────────────────────────────────────── */
+    .slide-label {
+      font-size: 13px; font-weight: 600; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
+    }
+    h2.slide-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 44px; font-weight: 800; color: var(--text);
+      line-height: 1.2; letter-spacing: -0.3px;
+    }
+
+    /* ─── Cards ───────────────────────────────────────────── */
+    .card {
+      background: var(--surf); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 22px 26px;
+    }
+    .card-gold {
+      background: rgba(232,160,74,0.06); border: 1px solid var(--borders);
+      border-radius: var(--r); padding: 22px 26px;
+    }
+
+    /* ─── Pills ───────────────────────────────────────────── */
+    .pill {
+      display: inline-block; padding: 5px 13px; border-radius: 99px;
+      font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+    }
+    .pill-gold  { background: rgba(232,160,74,0.12); color: var(--accent);  border: 1px solid var(--borders); }
+    .pill-green { background: rgba(82,201,122,0.12); color: var(--success); border: 1px solid rgba(82,201,122,0.3); }
+
+    /* ─── Tables ──────────────────────────────────────────── */
+    .slide-table { width: 100%; border-collapse: collapse; font-size: 16px; }
+    .slide-table th {
+      font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--muted2); padding: 10px 14px; text-align: left;
+      border-bottom: 1px solid var(--borders);
+    }
+    .slide-table td {
+      padding: 11px 14px; border-bottom: 1px solid var(--border);
+      color: var(--text); vertical-align: middle;
+    }
+    .slide-table tr:last-child td  { border-bottom: none; }
+    .slide-table .total-row td     { background: rgba(232,160,74,0.07); border-top: 1px solid var(--borders); color: var(--accent); font-weight: 700; font-size: 17px; }
+
+    /* ─── Chart Wrapper ───────────────────────────────────── */
+    .chart-wrap { position: relative; height: 260px; width: 100%; }
+
+    /* ─── Checkmarks ──────────────────────────────────────── */
+    .chk { color: var(--success); font-size: 19px; }
+    .crs { color: var(--muted2); font-size: 15px; }
+
+    /* ─── Layouts ─────────────────────────────────────────── */
+    .two-col   { display: grid; grid-template-columns: 1fr 1fr;     gap: 32px; flex: 1; align-items: center; }
+    .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; flex: 1; align-items: stretch; }
+
+    /* ─── Nav Bar ─────────────────────────────────────────── */
+    .deck-nav {
+      position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+      display: flex; align-items: center; gap: 18px; z-index: 200;
+      background: rgba(26,23,20,0.88); border: 1px solid var(--border);
+      border-radius: 99px; padding: 8px 22px; backdrop-filter: blur(10px);
+      opacity: 0; transition: opacity 0.25s ease;
+    }
+    .deck-nav:hover { opacity: 1; }
+    .nav-btn {
+      background: none; border: none; color: var(--muted);
+      font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 500;
+      cursor: pointer; padding: 3px 8px; border-radius: 5px; transition: color 0.2s;
+    }
+    .nav-btn:hover { color: var(--text); }
+    .slide-counter { font-size: 13px; color: var(--muted2); min-width: 36px; text-align: center; }
+
+    /* ════════════════════════════════════════════════════════
+       SLIDE-SPECIFIC STYLES
+       ════════════════════════════════════════════════════════ */
+
+    /* — Slide 1: Cover — */
+    .cover-meta {
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: 52px;
+    }
+    .cover-headline {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 64px; font-weight: 800; line-height: 1.1; letter-spacing: -1.5px;
+    }
+    .cover-client { color: var(--accent); display: block; }
+    .cover-brand  { color: var(--text);   display: block; font-size: 44px; margin-top: 8px; }
+    .cover-tagline { font-size: 19px; color: var(--muted); margin-top: 18px; font-style: italic; }
+    .cover-stats { display: flex; gap: 12px; margin-top: 40px; }
+    .cover-stat {
+      background: var(--surf); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 16px 24px; text-align: center;
+    }
+    .cover-stat-val   { font-family: 'Playfair Display', serif; font-size: 27px; font-weight: 800; color: var(--accent); }
+    .cover-stat-label { font-size: 14px; color: var(--muted); margin-top: 4px; }
+    .cover-contact    { position: absolute; bottom: 34px; right: 64px; text-align: right; font-size: 14px; color: var(--muted2); line-height: 1.7; }
+
+    /* — Slide 2: Problem — */
+    .problem-quote {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 54px; font-weight: 800; font-style: italic;
+      line-height: 1.22; color: var(--text); margin: auto 0; max-width: 900px;
+    }
+    .problem-quote em { color: var(--accent); font-style: normal; }
+    .problem-stats    { display: flex; gap: 18px; margin-top: 32px; }
+    .problem-stat {
+      flex: 1; background: var(--surf); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 18px 22px;
+    }
+    .problem-stat-val   { font-family: 'Playfair Display', serif; font-size: 46px; font-weight: 800; color: var(--accent); line-height: 1; }
+    .problem-stat-label { font-size: 15px; color: var(--muted); margin-top: 7px; line-height: 1.5; }
+
+    /* — Slide 3: Cost — */
+    .cost-number { font-family: 'Playfair Display', serif; font-size: 62px; font-weight: 800; color: var(--accent); line-height: 1; }
+    .cost-desc   { font-size: 16px; color: var(--muted); margin-top: 10px; line-height: 1.65; }
+    .cost-per-call { margin-top: 22px; padding-top: 22px; border-top: 1px solid var(--border); }
+
+    /* — Slide 4: When — */
+    .scenario-card {
+      background: var(--surf); border: 1px solid var(--border); border-radius: var(--r);
+      padding: 28px 24px; display: flex; flex-direction: column; gap: 12px;
+    }
+    .scenario-icon   { font-size: 32px; line-height: 1; }
+    .scenario-title  { font-weight: 600; font-size: 17px; color: var(--text); }
+    .scenario-desc   { font-size: 15px; color: var(--muted); line-height: 1.6; }
+    .scenario-result { margin-top: auto; font-size: 15px; color: #f87171; font-weight: 600; }
+
+    /* — Slide 5: How It Works — */
+    .steps-row { display: grid; grid-template-columns: 1fr 36px 1fr 36px 1fr; align-items: center; flex: 1; margin-top: 20px; }
+    .step-card {
+      background: var(--surf); border: 1px solid var(--border); border-radius: var(--r);
+      padding: 28px 24px; height: 100%; display: flex; flex-direction: column; gap: 12px;
+    }
+    .step-num   { font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 800; color: var(--accent); line-height: 1; opacity: 0.55; }
+    .step-title { font-weight: 700; font-size: 18px; color: var(--text); }
+    .step-desc  { font-size: 15px; color: var(--muted); line-height: 1.6; }
+    .step-arrow { text-align: center; color: var(--accent); font-size: 22px; opacity: 0.45; }
+
+    /* — Slide 6: Included — */
+    .price-big     { font-family: 'Playfair Display', serif; font-size: 66px; font-weight: 800; color: var(--accent); line-height: 1; }
+    .price-context { font-size: 16px; color: var(--muted); margin-top: 5px; }
+    .price-strike  { font-size: 17px; color: var(--muted2); text-decoration: line-through; margin-top: 9px; }
+
+    /* — Slide 7 (was Proof — removed): Timeline — */
+    .timeline {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 0; flex: 1; align-items: center;
+      position: relative; margin-top: 44px;
+    }
+    .timeline::before {
+      content: ''; position: absolute; top: 28px; left: 16%; right: 16%; height: 1px;
+      background: linear-gradient(to right, transparent, var(--borders), transparent);
+    }
+    .timeline-item { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 16px; position: relative; }
+    .timeline-circle {
+      width: 58px; height: 58px; border-radius: 50%; background: var(--accent); color: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 20px; font-family: 'Playfair Display', serif;
+      margin-bottom: 16px; position: relative; z-index: 1;
+    }
+    .timeline-day   { font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+    .timeline-title { font-weight: 700; font-size: 17px; color: var(--text); margin-bottom: 8px; }
+    .timeline-desc  { font-size: 15px; color: var(--muted); line-height: 1.55; }
+
+    /* — Slide 8 (was 9): Pricing — */
+    .pricing-table { width: 100%; border-collapse: separate; border-spacing: 10px 0; }
+    .pricing-table th {
+      background: var(--surf); padding: 15px 18px;
+      font-size: 15px; font-weight: 700; text-align: center;
+      border-radius: var(--r) var(--r) 0 0;
+      border: 1px solid var(--border); border-bottom: none;
+    }
+    .pricing-table th.hl    { background: rgba(232,160,74,0.08); border-color: var(--borders); color: var(--accent); }
+    .pricing-table .price-tag { display: block; font-size: 32px; font-family: 'Playfair Display', serif; font-weight: 800; margin-top: 4px; }
+    .pricing-table td {
+      background: var(--surf); border: 1px solid var(--border); border-top: none; border-bottom: none;
+      padding: 14px 18px; font-size: 15px; color: var(--muted); text-align: center;
+    }
+    .pricing-table td.hl    { background: rgba(232,160,74,0.05); border-color: var(--borders); color: var(--text); }
+    .pricing-table .row-lbl { background: transparent !important; border: none !important; text-align: left; color: var(--muted2); font-size: 13px; letter-spacing: 0.5px; }
+    .pricing-table tr:last-child td { border-bottom: 1px solid var(--border); border-radius: 0 0 var(--r) var(--r); }
+    .pricing-table tr:last-child td.hl { border-bottom-color: var(--borders); }
+
+    /* — Slide 9 (was 10): Guarantee — */
+    .guarantee-center { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 20px; }
+    .shield-icon  { width: 76px; height: 76px; background: rgba(82,201,122,0.1); border: 2px solid rgba(82,201,122,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 34px; }
+    .guar-title   { font-family: 'Playfair Display', serif; font-size: 46px; font-weight: 800; color: var(--text); }
+    .guar-body    { font-size: 17px; color: var(--muted); max-width: 680px; line-height: 1.75; }
+    .guar-chips   { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 8px; }
+
+    /* — Slide 10 (was 11): Deadline — */
+    .deadline-hl   { font-family: 'Playfair Display', serif; font-size: 62px; font-weight: 800; font-style: italic; color: var(--accent); line-height: 1.1; }
+    .deadline-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 28px; }
+    .deadline-box  { background: var(--surf); border: 1px solid var(--border); border-radius: var(--r); padding: 22px 24px; }
+    .deadline-box.red { background: rgba(220,38,38,0.07); border-color: rgba(220,38,38,0.25); }
+    .dbox-label    { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted2); margin-bottom: 14px; }
+    .dbox-label.red-lbl { color: #f87171; }
+    .dbox-item     { display: flex; align-items: center; gap: 9px; font-size: 16px; color: var(--text); margin-bottom: 9px; }
+
+    /* — Slide 11 (was 12): Next Steps — */
+    .nextsteps { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 22px; }
+    .step-row  { display: flex; align-items: flex-start; gap: 20px; }
+    .step-circ {
+      width: 46px; height: 46px; min-width: 46px; border-radius: 50%; background: var(--accent); color: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 19px; font-family: 'Playfair Display', serif;
+    }
+    .step-ct-title { font-weight: 700; font-size: 18px; color: var(--text); }
+    .step-ct-desc  { font-size: 15px; color: var(--muted); margin-top: 3px; }
+    .cta-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent); color: var(--bg);
+      font-family: 'Sora', sans-serif; font-size: 17px; font-weight: 700;
+      padding: 15px 30px; border-radius: 8px; text-decoration: none; margin-top: 16px;
+      transition: background 0.2s;
+    }
+    .cta-btn:hover { background: var(--hover); }
+    .cta-sub { font-size: 15px; color: var(--muted2); margin-top: 8px; }
+  </style>
+</head>
+<body>
+
+<div class="reveal" data-background-color="#100f0d">
+  <div class="slides">
+
+    <!-- ══════════════════════════════════════════════════════
+         SLIDE 1 — COVER
+         ══════════════════════════════════════════════════════ -->
+    <section>
+      <div class="slide dot-bg" style="justify-content:center;">
+        <div class="cover-meta">
+          <!-- Logo SVG -->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 52" fill="none" width="158" height="40">
+            <rect width="44" height="44" x="0" y="4" rx="10" fill="rgba(232,160,74,0.12)"/>
+            <path d="M11 30C11 22.268 17.268 16 25 16C32.732 16 39 22.268 39 30" stroke="#e8a04a" stroke-width="2.2" stroke-linecap="round"/>
+            <circle cx="25" cy="30" r="2.5" fill="#e8a04a"/>
+            <path d="M11 30L8 32.5" stroke="#e8a04a" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M39 30L42 32.5" stroke="#e8a04a" stroke-width="2.2" stroke-linecap="round"/>
+            <line x1="25" y1="12" x2="25" y2="15.5" stroke="#e8a04a" stroke-width="2.2" stroke-linecap="round"/>
+            <text x="56" y="33" font-family="'Playfair Display', Georgia, serif" font-size="26" font-weight="800" letter-spacing="-0.5" fill="#f5efe8">Never</text>
+            <text x="136" y="33" font-family="'Playfair Display', Georgia, serif" font-size="26" font-weight="800" letter-spacing="-0.5" fill="#e8a04a">Miss</text>
+          </svg>
+          <span class="pill pill-gold">BETA · 4 FREE SETUP SPOTS LEFT</span>
+        </div>
+
+        <div class="cover-headline">
+          <span class="cover-client" id="cover-client">Your Business</span>
+          <span class="cover-brand">× NeverMiss Hawaii</span>
+        </div>
+        <p class="cover-tagline">Your calls, answered. Your revenue, protected.</p>
+
+        <div class="cover-stats">
+          <div class="cover-stat">
+            <div class="cover-stat-val">24/7</div>
+            <div class="cover-stat-label">Always on</div>
+          </div>
+          <div class="cover-stat">
+            <div class="cover-stat-val">$300</div>
+            <div class="cover-stat-label">Per month</div>
+          </div>
+          <div class="cover-stat">
+            <div class="cover-stat-val">30-day</div>
+            <div class="cover-stat-label">Money-back guarantee</div>
+          </div>
+          <div class="cover-stat">
+            <div class="cover-stat-val">&lt;7 days</div>
+            <div class="cover-stat-label">Time to go live</div>
+          </div>
+        </div>
+
+        <div class="cover-contact">
+          Anu Kama · Founder<br>
+          okama@nevermisshawaii.com · (808) 724-3713
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         SLIDE 2 — THE PROBLEM
+         ══════════════════════════════════════════════════════ -->
+    <section>
+      <div class="slide stripe-left" style="justify-content:center;">
+        <p class="slide-label">The Problem</p>
+        <div class="problem-quote">
+          <em>"3 out of 4 callers"</em> who can't reach a business<br>
+          call a competitor instead.
+        </div>
+        <div class="problem-stats">
+          <div class="problem-stat">
+            <div class="problem-stat-val">74%</div>
+            <div class="problem-stat-label">of callers don't leave a voicemail — they hang up and move on</div>
+          </div>
+          <div class="problem-stat">
+            <div class="problem-stat-val">$0</div>
+            <div class="problem-stat-label">recovered from a missed call that never comes back</div>
+          </div>
+          <div class="problem-stat">
+            <div class="problem-stat-val">~3 min</div>
+            <div class="problem-stat-label">before an unanswered caller tries your competitor</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         SLIDE 3 — THE COST (variable)
+         ══════════════════════════════════════════════════════ -->
+    <section>
+      <div class="slide">
+        <p class="slide-label">What This Is Costing You</p>
+        <h2 class="slide-title" id="cost-title">Monthly Revenue at Risk</h2>
+        <div class="two-col" style="margin-top:22px;">
+          <div>
+            <div class="cost-number" id="cost-range">$8,000 – $15,000</div>
+            <div class="cost-desc">Lost each month from calls that go unanswered — during appointments, after hours, and on weekends.</div>
+            <div class="cost-per-call">
+              <div style="font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted2);margin-bottom:9px;">Revenue per missed call</div>
+              <div style="font-family:'Playfair Display',serif;font-size:36px;font-weight:800;color:var(--text);" id="cost-per-call">$800 – $1,500</div>
+              <div style="font-size:15px;color:var(--muted);margin-top:4px;" id="cost-unit">per new patient</div>
+            </div>
+            <p style="margin-top:20px;font-size:16px;color:var(--muted);line-height:1.65;">
+              You need NeverMiss to catch <strong style="color:var(--text);">1 call per month</strong> to break even. Everything after that is recovered revenue.
+            </p>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="chart3"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         SLIDE 4 — WHEN IT HAPPENS
+         ══════════════════════════════════════════════════════ -->
+    <section>
+      <div class="slide">
+        <p class="slide-label">When It Happens</p>
+        <h2 class="slide-title">Your phone can't be everywhere at once</h2>
+        <div class="three-col" style="margin-top:26px;">
+          <div class="scenario-card">
+            <div class="scenario-icon">🗓️</div>
+            <div class="scenario-title" id="scenario-0">During patient appointments</div>
+            <div class="scenario-desc">You're with a client. The phone rings. No one else is free. It rolls to voicemail — and they hang up.</div>
+            <div class="scenario-result">→ Caller books with your competitor</div>
+          </div>
+          <div class="scenario-card">
+            <div class="scenario-icon">🌙</div>
+            <div class="scenario-title" id="scenario-1">After 5 PM &amp; weekends</div>
+            <div class="scenario-desc">Most businesses close their phones at 5. Most customers don't stop needing help at 5.</div>
+            <div class="scenario-result">→ Revenue walks out overnight</div>
+          </div>
+          <div class="scenario-card">
+            <div class="scenario-icon">📞</div>
+            <div class="scenario-title" id="scenario-2">When the front desk is occupied</div>
+            <div class="scenario-desc">Overflow calls during busy hours drop to voicemail. 74% of those callers won't try again.</div>
+            <div class="scenario-result">→ Invisible revenue leak</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         SLIDE 5 — HOW IT WORKS
+         ══════════════════════════════════════════════════════ -->
+    <section>
+      <div class="slide">
+        <p class="slide-label">The Solution</p>
+        <h2 class="slide-title">NeverMiss — 24/7 Call Capture &amp; Booking</h2>
+        <div class="steps-row">
+          <div class="step-card">
+            <div class="step-num">01</div>
+            <div class="step-title">Call Comes In</div>
+            <div class="step-desc">Any time of day. After hours. During your busiest moment. NeverMiss picks up within 2 rings — every time.</div>
+          </div>
+          <div class="step-arrow">→</div>
+          <div class="step-card">
+            <div class="step-num">02</div>
+            <div class="step-title">AI Answers &amp; Books</div>
+            <div class="step-desc">Sounds exactly like your staff. Answers their questions. Books the appointment directly into your calendar.</div>
+          </div>
+          <div class="step-arrow">→</div>
+          <div class="step-card">
+            <div class="step-num">03</div>
+            <div class="step-title">You Get Notified</div>
+            <div class="step-desc">You finish up with your current client. A new booking is already waiting. You didn't miss a thing.</div>
+          </div>
+        </div>
+        <p style="margin-top:26px;font-size:16px;color:var(--muted);font-style:italic;text-align:center;">
+          "The caller never knows it was AI. You never missed the call."
+        </p>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         SLIDE 6 — WHAT'S INCLUDED
+         ══════════════════════════════════════════════════════ -->
+    <section>
+      <div class="slide">
+        <p class="slide-label">What You Get</p>
+        <div style="display:grid;grid-template-columns:1.45fr 1fr;gap:28px;flex:1;align-items:start;margin-top:14px;">
+          <table class="slide-table">
+            <thead>
+              <tr>
+                <th>Included with every account</th>
+                <th style="text-align:right;">Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>24/7 AI answering — every call picked up</td><td style="text-align:right;color:var(--muted);">$1,500/mo</td></tr>
+              <tr><td>Appointment booking into your calendar</td><td style="text-align:right;color:var(--muted);">$500/mo</td></tr>
+              <tr><td>After-hours &amp; overflow call capture</td><td style="text-align:right;color:var(--muted);">$2,000–$8,000+/mo</td></tr>
+              <tr>
+                <td>
+                  Missed-call text-back
+                  <div style="font-size:14px;color:var(--muted2);margin-top:2px;">Anyone who can't reach you gets an instant text — before they call a competitor</div>
+                </td>
+                <td style="text-align:right;color:var(--muted);vertical-align:top;padding-top:14px;">~$300/mo</td>
+              </tr>
+              <tr>
+                <td>
+                  Appointment reminder SMS
+                  <div style="font-size:14px;color:var(--muted2);margin-top:2px;">Automatic reminders before every booked appointment — cuts no-shows</div>
+                </td>
+                <td style="text-align:right;color:var(--muted);vertical-align:top;padding-top:14px;">~$500/mo</td>
+              </tr>
+              <tr>
+                <td>
+                  Two-way SMS bot
+                  <div style="font-size:14px;color:var(--muted2);margin-top:2px;">Customers text your number, AI responds and books — even at 10 PM</div>
+                </td>
+                <td style="text-align:right;color:var(--muted);vertical-align:top;padding-top:14px;">~$400/mo</td>
+              </tr>
+              <tr>
+                <td>Setup &amp; onboarding <span class="pill pill-green" style="font-size:11px;padding:2px 8px;margin-left:6px;">FREE DURING BETA</span></td>
+                <td style="text-align:right;color:var(--muted);">$500 value</td>
+              </tr>
+              <tr class="total-row">
+                <td><strong>Total value</strong></td>
+                <td style="text-align:right;"><strong>$5,700+/mo</strong></td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <div class="card-gold" style="text-align:center;">
+              <div style="font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted2);margin-bottom:10px;">Your investment</div>
+              <div class="price-big">$300</div>
+              <div class="price-context">per month · no contract</div>
+              <div class="price-strike">$5,700+ value</div>
+            </div>
+            <div class="card" style="font-size:16px;color:var(--muted);line-height:1.65;">
+              You break even <strong style="color:var(--text);">the first time</strong> NeverMiss catches a call you would have missed.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         SLIDE 7 — DEMO
+         ══════════════════════════════════════════════════════ -->
+    <section>
+      <div class="slide">
+        <p class="slide-label">Hear It Live</p>
+        <h2 class="slide-title">This is what your customers hear when they call.</h2>
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:28px;margin-top:10px;">
+          <div style="background:var(--surf);border:1px solid var(--border-strong);border-radius:16px;padding:36px 48px;text-align:center;max-width:560px;width:100%;">
+            <div style="font-size:48px;margin-bottom:16px;">🎧</div>
+            <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--text);margin-bottom:10px;">
+              Live demo call — <span id="demo-industry">dental office</span>
+            </div>
+            <p style="font-size:16px;color:var(--muted);line-height:1.65;margin-bottom:24px;">
+              Real call. Real AI. Booked an appointment in under 90 seconds.
+            </p>
+            <audio controls style="width:100%;border-radius:8px;accent-color:var(--accent);">
+              <source src="../demos/universal-demo.wav" type="audio/wav">
+              Your browser doesn't support audio playback.
+            </audio>
+            <p style="font-size:13px;color:var(--muted2);margin-top:14px;">
+              The AI answers, captures the reason for the call, confirms availability, and books — all without a human touching anything.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         SLIDE 8 — SETUP TIMELINE
+         ══════════════════════════════════════════════════════ -->
+    <section>
+      <div class="slide">
+        <p class="slide-label">Getting Started</p>
+        <h2 class="slide-title">Live in under a week. Zero technical work on your end.</h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-circle">1</div>
+            <div class="timeline-day">Day 1</div>
+            <div class="timeline-title">30-Minute Setup Call</div>
+            <div class="timeline-desc">Walk us through your business — hours, FAQs, and how you take bookings. You answer questions. We handle everything else.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-circle">2</div>
+            <div class="timeline-day">Day 2–3</div>
+            <div class="timeline-title">Agent Built &amp; Tested</div>
+            <div class="timeline-desc">NeverMiss is configured for your exact business and tested thoroughly before going live. You review and approve.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-circle">3</div>
+            <div class="timeline-day">Day 5–7</div>
+            <div class="timeline-title">You're Live</div>
+            <div class="timeline-desc">Every call answered. Every appointment booked. Missed-call texts fire automatically. First recovered call usually within 24 hours.</div>
+          </div>
+        </div>
+        <p style="margin-top:36px;text-align:center;font-size:16px;color:var(--muted);font-style:italic;">
+          "Setup is completely done for you. Show up for one call — we do the rest."
+        </p>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         SLIDE 9 — PRICING COMPARISON
+         ══════════════════════════════════════════════════════ -->
+    <section>
+      <div class="slide">
+        <p class="slide-label">Pricing</p>
+        <h2 class="slide-title">$300/month vs. the alternatives</h2>
+        <div style="flex:1;display:flex;align-items:center;margin-top:14px;">
+          <table class="pricing-table">
+            <thead>
+              <tr>
+                <th class="row-lbl"></th>
+                <th>
+                  Full-Time Receptionist
+                  <span class="price-tag" style="color:var(--muted);">$3,000–$4,500<span style="font-size:16px;">/mo</span></span>
+                </th>
+                <th>
+                  Traditional Answering Service
+                  <span class="price-tag" style="color:var(--muted);">$200–$500<span style="font-size:16px;">/mo</span></span>
+                </th>
+                <th class="hl">
+                  NeverMiss Hawaii
+                  <span class="pill pill-gold" style="font-size:10px;margin-left:5px;vertical-align:middle;">BEST VALUE</span>
+                  <span class="price-tag">$300<span style="font-size:16px;">/mo</span></span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="row-lbl">Answers every call</td>
+                <td><span class="chk">✓</span></td>
+                <td><span class="chk">✓</span></td>
+                <td class="hl"><span class="chk">✓</span></td>
+              </tr>
+              <tr>
+                <td class="row-lbl">Books appointments</td>
+                <td><span class="chk">✓</span></td>
+                <td><span class="crs">✗ Takes messages only</span></td>
+                <td class="hl"><span class="chk">✓</span></td>
+              </tr>
+              <tr>
+                <td class="row-lbl">24/7 coverage</td>
+                <td><span class="crs">✗ Business hours only</span></td>
+                <td>Sometimes</td>
+                <td class="hl"><span class="chk">✓ Always on</span></td>
+              </tr>
+              <tr>
+                <td class="row-lbl">Sounds human</td>
+                <td><span class="chk">✓</span></td>
+                <td><span class="crs">✗ Robotic scripts</span></td>
+                <td class="hl"><span class="chk">✓</span></td>
+              </tr>
+              <tr>
+                <td class="row-lbl">SMS features included</td>
+                <td><span class="crs">✗</span></td>
+                <td><span class="crs">✗</span></td>
+                <td class="hl"><span class="chk">✓ 3 features free</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         SLIDE 10 — GUARANTEE
+         ══════════════════════════════════════════════════════ -->
+    <section>
+      <div class="slide dot-bg">
+        <p class="slide-label">Our Promise</p>
+        <div class="guarantee-center">
+          <div class="shield-icon">🛡️</div>
+          <div class="guar-title">30-Day Money-Back Guarantee</div>
+          <div class="guar-body">
+            If NeverMiss doesn't recover more than $300 in your first month — meaning it doesn't capture at least one call that would have gone to voicemail — I refund everything. No questions asked.
+          </div>
+          <div class="guar-chips">
+            <span class="pill pill-green">No contract</span>
+            <span class="pill pill-green">Cancel anytime</span>
+            <span class="pill pill-green">Full refund if it doesn't pay off</span>
+            <span class="pill pill-gold">Month-to-month</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         SLIDE 11 — BETA DEADLINE
+         ══════════════════════════════════════════════════════ -->
+    <section>
+      <div class="slide">
+        <p class="slide-label">Beta Program</p>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+          <div class="deadline-hl">4 free setup spots<br>remaining.</div>
+          <div class="deadline-cols">
+            <div class="deadline-box">
+              <div class="dbox-label">Start your free trial — you get</div>
+              <div class="dbox-item"><span class="chk">✓</span> 2 weeks free — no credit card</div>
+              <div class="dbox-item"><span class="chk">✓</span> Setup completely free (normally $500)</div>
+              <div class="dbox-item"><span class="chk">✓</span> Custom AI built for your exact business</div>
+              <div class="dbox-item"><span class="chk">✓</span> All 3 SMS features included at no charge</div>
+              <div class="dbox-item"><span class="chk">✓</span> Live within 48 hours</div>
+            </div>
+            <div class="deadline-box red">
+              <div class="dbox-label red-lbl">After spots fill</div>
+              <div class="dbox-item" style="color:var(--muted);">$300/mo — same monthly rate</div>
+              <div class="dbox-item" style="color:#f87171;">+ $500 setup fee added on top</div>
+              <p style="font-size:15px;color:var(--muted2);margin-top:12px;line-height:1.6;">
+                The monthly price won't change — but free setup is only available for the next 4 customers.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         SLIDE 13 — CLOSE / TRIAL CTA
+         ══════════════════════════════════════════════════════ -->
+    <section>
+      <div class="slide dot-bg">
+        <p class="slide-label">Ready to Start?</p>
+        <h2 class="slide-title">Try NeverMiss free for 2 weeks</h2>
+        <div class="nextsteps">
+          <div class="step-row">
+            <div class="step-circ">1</div>
+            <div>
+              <div class="step-ct-title">Fill out a 5-minute setup form</div>
+              <div class="step-ct-desc">Your hours, how you take bookings, what you want the AI to say. That's it — I handle everything else.</div>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-circ">2</div>
+            <div>
+              <div class="step-ct-title">Live on your phones within 48 hours</div>
+              <div class="step-ct-desc">I configure and test the AI, then send you a test call so you can hear it before it goes live. No technical work on your end.</div>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-circ">3</div>
+            <div>
+              <div class="step-ct-title">After 14 days — keep it or walk away</div>
+              <div class="step-ct-desc">No credit card during the trial. If NeverMiss catches calls you would have missed, it's $300/mo to keep it. If not, I wind it down. No charge.</div>
+            </div>
+          </div>
+          <div>
+            <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--accent);margin-bottom:8px;">
+              Want to try it free for 2 weeks?
+            </div>
+            <div class="cta-sub" style="font-size:16px;">(808) 724-3713 · okama@nevermisshawaii.com</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /.slides -->
+</div><!-- /.reveal -->
+
+<!-- Navigation Bar -->
+<div class="deck-nav">
+  <button class="nav-btn" onclick="Reveal.prev()">← Prev</button>
+  <span class="slide-counter" id="slideCounter">1 / 13</span>
+  <button class="nav-btn" onclick="Reveal.next()">Next →</button>
+</div>
+
+<!-- Reveal.js -->
+<script src="https://unpkg.com/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+// ─── URL Params ──────────────────────────────────────────────
+const params      = new URLSearchParams(window.location.search);
+const INDUSTRY    = (params.get('industry') || 'dental').toLowerCase().replace(/\s+/g, '-');
+const CLIENT_NAME = params.get('client') || 'Your Business';
+
+// ─── Industry Data ───────────────────────────────────────────
+const INDUSTRY_DATA = {
+  dental: {
+    costTitle:   'Monthly Revenue at Risk — Dental',
+    monthlyLow:  8000,  monthlyHigh:  15000,
+    perCallLow:  800,   perCallHigh:  1500,
+    perCallUnit: 'per new patient',
+    scenarios:   ['During patient appointments', 'After 5 PM & weekends', 'When front desk is occupied'],
+    storyTitle:  'A dental practice in Honolulu — 30 days',
+    storyIntro:  'A dental practice was losing calls during patient hours and after closing. They set up NeverMiss.',
+    storyJobs:   12,  storyRevenue: 9600,  storyUnit: 'new patient appointments',
+  },
+  plumbing: {
+    costTitle:   'Monthly Revenue at Risk — Plumbing',
+    monthlyLow:  4000,  monthlyHigh:  8000,
+    perCallLow:  400,   perCallHigh:  1200,
+    perCallUnit: 'per job',
+    scenarios:   ['During active jobs on-site', 'After-hours emergency calls', 'Weekends & holidays'],
+    storyTitle:  'A plumbing business on Oahu — 30 days',
+    storyIntro:  'A plumbing business was losing after-hours and emergency calls to competitors. They set up NeverMiss.',
+    storyJobs:   8,   storyRevenue: 6400,  storyUnit: 'emergency jobs',
+  },
+  'physical-therapy': {
+    costTitle:   'Monthly Revenue at Risk — Physical Therapy',
+    monthlyLow:  5000,  monthlyHigh:  10000,
+    perCallLow:  400,   perCallHigh:  800,
+    perCallUnit: 'per new patient',
+    scenarios:   ['During treatment sessions', 'Before & after clinic hours', 'Weekends & referral calls'],
+    storyTitle:  'A PT clinic in Honolulu — 30 days',
+    storyIntro:  'A physical therapy clinic was missing referral calls during treatment hours. They set up NeverMiss.',
+    storyJobs:   10,  storyRevenue: 5000,  storyUnit: 'new patient sessions',
+  },
+  hvac: {
+    costTitle:   'Monthly Revenue at Risk — HVAC',
+    monthlyLow:  4000,  monthlyHigh:  9000,
+    perCallLow:  300,   perCallHigh:  1000,
+    perCallUnit: 'per service call',
+    scenarios:   ['During active service calls', 'After-hours emergency requests', 'Weekends & peak season'],
+    storyTitle:  'An HVAC business in Hawaii — 30 days',
+    storyIntro:  'An HVAC company was missing emergency calls on nights and weekends. They set up NeverMiss.',
+    storyJobs:   9,   storyRevenue: 5400,  storyUnit: 'service calls',
+  },
+  chiropractic: {
+    costTitle:   'Monthly Revenue at Risk — Chiropractic',
+    monthlyLow:  5000,  monthlyHigh:  10000,
+    perCallLow:  300,   perCallHigh:  700,
+    perCallUnit: 'per new patient',
+    scenarios:   ['During patient adjustments', 'After clinic hours', 'Weekends & new patient calls'],
+    storyTitle:  'A chiropractic clinic in Hawaii — 30 days',
+    storyIntro:  'A chiropractic clinic was losing new patient calls during busy appointment hours. They set up NeverMiss.',
+    storyJobs:   11,  storyRevenue: 4400,  storyUnit: 'new patient appointments',
+  },
+  default: {
+    costTitle:   'Monthly Revenue at Risk',
+    monthlyLow:  3000,  monthlyHigh:  8000,
+    perCallLow:  300,   perCallHigh:  1000,
+    perCallUnit: 'per customer',
+    scenarios:   ['During peak business hours', 'After hours & evenings', 'Weekends & holidays'],
+    storyTitle:  'A service business in Hawaii — 30 days',
+    storyIntro:  'A local service business was losing calls during busy hours and after closing. They set up NeverMiss.',
+    storyJobs:   10,  storyRevenue: 5000,  storyUnit: 'new customers',
+  },
+};
+
+const D = INDUSTRY_DATA[INDUSTRY] || INDUSTRY_DATA.default;
+
+// ─── Inject Dynamic Content ──────────────────────────────────
+function injectContent() {
+  document.getElementById('cover-client').textContent = CLIENT_NAME;
+  document.getElementById('cost-title').textContent   = D.costTitle;
+  document.getElementById('cost-range').textContent   = `$${D.monthlyLow.toLocaleString()} – $${D.monthlyHigh.toLocaleString()}`;
+  document.getElementById('cost-per-call').textContent = `$${D.perCallLow.toLocaleString()} – $${D.perCallHigh.toLocaleString()}`;
+  document.getElementById('cost-unit').textContent    = D.perCallUnit;
+  document.getElementById('scenario-0').textContent  = D.scenarios[0];
+  document.getElementById('scenario-1').textContent  = D.scenarios[1];
+  document.getElementById('scenario-2').textContent  = D.scenarios[2];
+  document.getElementById('proof-title').textContent = D.storyTitle;
+  document.getElementById('proof-quote').innerHTML   =
+    D.storyIntro +
+    `<div class="proof-result">${D.storyJobs} ${D.storyUnit} recovered.</div>` +
+    `<div class="proof-paid">$${D.storyRevenue.toLocaleString()} in recovered revenue. They paid $300.</div>`;
+}
+
+// ─── Chart Defaults ──────────────────────────────────────────
+Chart.defaults.color       = '#b8a898';
+Chart.defaults.borderColor = 'rgba(232,160,74,0.07)';
+Chart.defaults.font.family = "'Sora', sans-serif";
+
+let chart3, chart7;
+
+function initChart3() {
+  const canvas = document.getElementById('chart3');
+  if (!canvas) return;
+  if (chart3) { chart3.destroy(); chart3 = null; }
+  chart3 = new Chart(canvas, {
+    type: 'bar',
+    data: {
+      labels: ['Conservative', 'High estimate'],
+      datasets: [{
+        data: [D.monthlyLow, D.monthlyHigh],
+        backgroundColor: ['rgba(232,160,74,0.3)', 'rgba(232,160,74,0.78)'],
+        borderColor:     ['rgba(232,160,74,0.55)', '#e8a04a'],
+        borderWidth: 1, borderRadius: 8, borderSkipped: false,
+      }],
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: false,
+      animation: { duration: 800, easing: 'easeOutQuart' },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#1a1714', borderColor: 'rgba(232,160,74,0.28)', borderWidth: 1,
+          titleColor: '#f5efe8', bodyColor: '#b8a898',
+          callbacks: { label: ctx => `  $${ctx.parsed.x.toLocaleString()}/month` },
+        },
+      },
+      scales: {
+        x: { ticks: { callback: v => `$${(v/1000).toFixed(0)}k`, color: '#b8a898', font: { size: 12 } }, grid: { color: 'rgba(232,160,74,0.07)' } },
+        y: { ticks: { color: '#b8a898', font: { size: 12 } }, grid: { display: false } },
+      },
+    },
+  });
+}
+
+function initChart7() {
+  const canvas = document.getElementById('chart7');
+  if (!canvas) return;
+  if (chart7) { chart7.destroy(); chart7 = null; }
+  chart7 = new Chart(canvas, {
+    type: 'bar',
+    data: {
+      labels: ['Before NeverMiss', 'After NeverMiss'],
+      datasets: [{
+        data: [0, D.storyRevenue],
+        backgroundColor: ['rgba(122,106,88,0.22)', 'rgba(232,160,74,0.72)'],
+        borderColor:     ['rgba(122,106,88,0.45)', '#e8a04a'],
+        borderWidth: 1, borderRadius: 8, borderSkipped: false,
+      }],
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      animation: { duration: 900, easing: 'easeOutQuart' },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#1a1714', borderColor: 'rgba(232,160,74,0.28)', borderWidth: 1,
+          titleColor: '#f5efe8', bodyColor: '#b8a898',
+          callbacks: { label: ctx => `  $${ctx.parsed.y.toLocaleString()} recovered` },
+        },
+      },
+      scales: {
+        y: { beginAtZero: true, ticks: { callback: v => `$${(v/1000).toFixed(0)}k`, color: '#b8a898', font: { size: 12 } }, grid: { color: 'rgba(232,160,74,0.07)' } },
+        x: { ticks: { color: '#b8a898', font: { size: 13 } }, grid: { display: false } },
+      },
+    },
+  });
+}
+
+// ─── Reveal Init ─────────────────────────────────────────────
+Reveal.initialize({
+  hash: true,
+  transition: 'fade', transitionSpeed: 'default', backgroundTransition: 'fade',
+  controls: false, progress: true, center: false, slideNumber: false,
+  width: 1280, height: 720, margin: 0,
+  minScale: 0.2, maxScale: 2.0,
+  keyboard: true, touch: true,
+});
+
+Reveal.on('ready', () => {
+  injectContent();
+  initChart3();
+  initChart7();
+  updateCounter();
+});
+
+Reveal.on('slidechanged', e => {
+  updateCounter();
+  if (e.indexh === 2) setTimeout(initChart3, 50);
+  if (e.indexh === 6) setTimeout(initChart7, 50);
+});
+
+function updateCounter() {
+  const total = Reveal.getTotalSlides();
+  const idx   = (Reveal.getIndices() || {h: 0}).h + 1;
+  document.getElementById('slideCounter').textContent = `${idx} / ${total}`;
+}
+</script>
+</body>
+</html>
