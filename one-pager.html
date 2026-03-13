@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeverMiss Hawaii — One Pager</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg:      #100f0d;
+      --surf:    #1a1714;
+      --surf2:   #221f1b;
+      --accent:  #e8a04a;
+      --text:    #f5efe8;
+      --muted:   #b8a898;
+      --muted2:  #7a6a58;
+      --border:  rgba(232,160,74,0.14);
+      --borders: rgba(232,160,74,0.30);
+      --success: #52c97a;
+      --r:       10px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Sora', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 48px 40px 60px;
+    }
+
+    /* ── Header ──────────────────────────────────────────── */
+    .header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 28px;
+      margin-bottom: 36px;
+      gap: 24px;
+    }
+
+    .brand-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -0.01em;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .brand-tag {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 380px;
+      line-height: 1.5;
+    }
+
+    .contact-block {
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .contact-block .contact-name {
+      font-weight: 600;
+      color: var(--text);
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .contact-block .contact-detail {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── Section scaffolding ─────────────────────────────── */
+    .section { margin-bottom: 36px; }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.25;
+      margin-bottom: 14px;
+    }
+
+    .section-body {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 680px;
+    }
+
+    /* ── Divider ─────────────────────────────────────────── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 36px 0;
+    }
+
+    /* ── Stat bar (The Problem) ──────────────────────────── */
+    .stat-bar {
+      display: flex;
+      gap: 16px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .stat-pill {
+      background: var(--surf);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 14px 18px;
+      flex: 1;
+      min-width: 160px;
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* ── Feature grid (What You Get) ─────────────────────── */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .feature-card {
+      background: var(--surf);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 16px 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .feature-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(232,160,74,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .feature-name {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+
+    .feature-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .feature-badge {
+      font-size: 10px;
+      font-weight: 700;
+      background: rgba(82,201,122,0.15);
+      color: var(--success);
+      border: 1px solid rgba(82,201,122,0.3);
+      border-radius: 4px;
+      padding: 2px 6px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    /* ── Industry numbers ────────────────────────────────── */
+    .industry-row {
+      display: flex;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .industry-card {
+      flex: 1;
+      background: var(--surf);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--accent);
+      border-radius: var(--r);
+      padding: 18px 20px;
+    }
+
+    .industry-name {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .industry-loss {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+
+    .industry-detail {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── Offer box ───────────────────────────────────────── */
+    .offer-box {
+      background: var(--surf);
+      border: 1px solid var(--borders);
+      border-radius: var(--r);
+      padding: 28px 32px;
+      display: flex;
+      gap: 36px;
+      align-items: flex-start;
+      margin-top: 16px;
+    }
+
+    .offer-price-col { flex-shrink: 0; text-align: center; }
+
+    .price-amount {
+      font-family: 'Playfair Display', serif;
+      font-size: 52px;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .price-unit { font-size: 14px; color: var(--muted); margin-top: 4px; }
+
+    .price-alt {
+      font-size: 12px;
+      color: var(--muted2);
+      margin-top: 6px;
+      border-top: 1px solid var(--border);
+      padding-top: 8px;
+    }
+
+    .offer-items { flex: 1; }
+
+    .offer-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--muted);
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .offer-item:last-child { border-bottom: none; }
+
+    .chk { color: var(--success); font-size: 14px; flex-shrink: 0; }
+    .offer-item-text strong { color: var(--text); }
+
+    /* ── Comparison table ────────────────────────────────── */
+    .comp-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 10px 0;
+      margin-top: 16px;
+    }
+
+    .comp-table th {
+      background: var(--surf);
+      padding: 12px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+      border-radius: var(--r) var(--r) 0 0;
+      border: 1px solid var(--border);
+      border-bottom: none;
+    }
+
+    .comp-table th.hl {
+      background: rgba(232,160,74,0.08);
+      border-color: var(--borders);
+      color: var(--accent);
+    }
+
+    .comp-table td {
+      background: var(--surf);
+      border: 1px solid var(--border);
+      border-top: none;
+      border-bottom: none;
+      padding: 10px 16px;
+      font-size: 13px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .comp-table td.hl {
+      background: rgba(232,160,74,0.05);
+      border-color: var(--borders);
+      color: var(--text);
+    }
+
+    .comp-table .row-lbl {
+      background: transparent !important;
+      border: none !important;
+      text-align: left;
+      color: var(--muted2);
+      font-size: 12px;
+      letter-spacing: 0.4px;
+    }
+
+    .comp-table tr:last-child td {
+      border-bottom: 1px solid var(--border);
+      border-radius: 0 0 var(--r) var(--r);
+    }
+
+    .comp-table tr:last-child td.hl { border-bottom-color: var(--borders); }
+
+    .tick { color: var(--success); }
+    .cross { color: #f87171; }
+
+    /* ── CTA footer ──────────────────────────────────────── */
+    .cta-footer {
+      margin-top: 40px;
+      border-top: 1px solid var(--border);
+      padding-top: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .cta-main { flex: 1; }
+
+    .cta-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .cta-sub {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .cta-button {
+      display: inline-block;
+      background: var(--accent);
+      color: #0d0b09;
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 13px 26px;
+      border-radius: var(--r);
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ── Print ───────────────────────────────────────────── */
+    @media print {
+      body { background: #fff; color: #111; }
+      :root {
+        --bg: #fff; --surf: #f5f5f0; --surf2: #ece9e2;
+        --text: #111; --muted: #555; --muted2: #888;
+        --border: rgba(0,0,0,0.12); --borders: rgba(0,0,0,0.25);
+        --accent: #b87420;
+      }
+      .page { padding: 20px 28px; }
+      .cta-button { border: 2px solid #b87420; background: transparent; color: #b87420; }
+    }
+
+    @media (max-width: 680px) {
+      .page { padding: 28px 20px 40px; }
+      .header { flex-direction: column; gap: 16px; }
+      .contact-block { text-align: left; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .industry-row { flex-direction: column; }
+      .offer-box { flex-direction: column; gap: 20px; }
+      .cta-footer { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── Header ─────────────────────────────────────────── -->
+  <div class="header">
+    <div>
+      <div class="brand-name">NeverMiss Hawaii</div>
+      <div class="brand-tag">The receptionist Hawaii won't let you hire — answering every call 24/7, booking appointments, and growing your Google reviews, all for $10/day.</div>
+    </div>
+    <div class="contact-block">
+      <div class="contact-name">Anu Kama</div>
+      <div class="contact-detail">
+        (808) 724-3713<br>
+        okama@nevermisshawaii.com<br>
+        nevermisshawaii.com
+      </div>
+    </div>
+  </div>
+
+  <!-- ── The Problem ────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-label">The Problem</div>
+    <div class="section-title">Hawaii's labor market is broken. Your phones pay the price.</div>
+    <div class="section-body">
+      58.4% of Hawaii executives say talent acquisition is their #1 challenge. A single adult in Honolulu needs $25/hour just to cover basic living costs. Minimum wage is $16 — rising to $18 by 2028. Businesses that need phone coverage cannot get it or cannot keep it. Meanwhile, every missed call is revenue walking out to a competitor who answered.
+    </div>
+    <div class="stat-bar">
+      <div class="stat-pill">
+        <div class="stat-number">80–95%</div>
+        <div class="stat-label">of callers who reach voicemail hang up and call a competitor</div>
+      </div>
+      <div class="stat-pill">
+        <div class="stat-number">$126K</div>
+        <div class="stat-label">average annual missed-call loss for a small service business</div>
+      </div>
+      <div class="stat-pill">
+        <div class="stat-number">78%</div>
+        <div class="stat-label">of customers choose the first business to respond to their call</div>
+      </div>
+      <div class="stat-pill">
+        <div class="stat-number">21×</div>
+        <div class="stat-label">more likely to convert when you respond within 5 minutes (MIT)</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── The Solution ───────────────────────────────────── -->
+  <div class="section">
+    <div class="section-label">The Solution</div>
+    <div class="section-title">NeverMiss answers every call, books every appointment, and grows your reviews — automatically.</div>
+    <div class="section-body">
+      A done-for-you AI receptionist that sounds human, works 24/7, and is live on your phones in 48 hours. No tech setup. No hiring. No training. Anu configures everything personally in a 30-minute call. You review it. Then it runs.
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── What You Get ───────────────────────────────────── -->
+  <div class="section">
+    <div class="section-label">What You Get</div>
+    <div class="section-title">Every account includes all of this.</div>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">📞</div>
+        <div>
+          <div class="feature-name">24/7 AI call answering</div>
+          <div class="feature-desc">Every call answered — after hours, weekends, peak periods, overflow. Sounds human. Callers don't know it's AI.</div>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📅</div>
+        <div>
+          <div class="feature-name">Appointment booking</div>
+          <div class="feature-desc">Books directly into your calendar. Not a message-taker — an actual booker. Works with Cal.com and most calendars.</div>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💬</div>
+        <div>
+          <div class="feature-name">Missed-call text-back</div>
+          <div class="feature-desc">Anyone who can't reach you gets an instant text before they call the next business on Google.</div>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔔</div>
+        <div>
+          <div class="feature-name">Appointment reminder SMS</div>
+          <div class="feature-desc">Automatic reminders the day before and morning of every appointment. Cuts no-shows 30–40% in the first month.</div>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <div>
+          <div class="feature-name">Two-way SMS bot</div>
+          <div class="feature-desc">Customers text your number, AI responds and books — even at 10 PM. No human needed.</div>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⭐</div>
+        <div>
+          <div class="feature-name">Automatic Google review generation <span class="feature-badge">NEW</span></div>
+          <div class="feature-desc">After every booked call, customer gets an SMS asking for a Google review. Local agencies charge $200–$500/mo for this alone — included.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── The Numbers ────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-label">The Numbers</div>
+    <div class="section-title">What missed calls actually cost your industry.</div>
+    <div class="industry-row">
+      <div class="industry-card">
+        <div class="industry-name">Dentists</div>
+        <div class="industry-loss">$34,000/month</div>
+        <div class="industry-detail">Average dental practice loses $34K/month to missed calls. 50–75 missed calls per week. Only 14% of new patients leave a voicemail — the other 86% call the next dentist.</div>
+      </div>
+      <div class="industry-card">
+        <div class="industry-name">Plumbers</div>
+        <div class="industry-loss">$50K–$123K/year</div>
+        <div class="industry-detail">8–12 after-hours emergency calls per week go unanswered. 95% of emergency callers don't leave a voicemail. They call whoever answers. Average emergency job: $450–$1,200.</div>
+      </div>
+      <div class="industry-card">
+        <div class="industry-name">HVAC</div>
+        <div class="industry-loss">$45K–$120K/year</div>
+        <div class="industry-detail">Miss 27% of all inbound calls. Hawaii's year-round climate means consistent demand — no seasonal dip. One answered emergency call pays for NeverMiss for months.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── The Offer ──────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-label">The Offer</div>
+    <div class="section-title">Start free. Decide after 2 weeks.</div>
+    <div class="offer-box">
+      <div class="offer-price-col">
+        <div class="price-amount">$300</div>
+        <div class="price-unit">per month</div>
+        <div class="price-alt">$10/day — less than one<br>hour of Hawaii minimum wage</div>
+      </div>
+      <div class="offer-items">
+        <div class="offer-item">
+          <span class="chk">✓</span>
+          <span class="offer-item-text"><strong>2-week free trial</strong> — no credit card required</span>
+        </div>
+        <div class="offer-item">
+          <span class="chk">✓</span>
+          <span class="offer-item-text"><strong>Setup is free</strong> for our next 5 customers (normally $500)</span>
+        </div>
+        <div class="offer-item">
+          <span class="chk">✓</span>
+          <span class="offer-item-text"><strong>Custom AI</strong> configured for your exact business hours, FAQs, and services</span>
+        </div>
+        <div class="offer-item">
+          <span class="chk">✓</span>
+          <span class="offer-item-text"><strong>Live within 48 hours</strong> — Anu handles everything, no tech work on your end</span>
+        </div>
+        <div class="offer-item">
+          <span class="chk">✓</span>
+          <span class="offer-item-text">After 2 weeks: <strong>keep it or walk away — no charge, no invoice</strong></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── The Comparison ────────────────────────────────── -->
+  <div class="section">
+    <div class="section-label">The Comparison</div>
+    <div class="section-title">$10/day vs. the alternatives.</div>
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th class="row-lbl"></th>
+          <th>Full-Time Receptionist</th>
+          <th>Traditional Answering</th>
+          <th>AgentBro / Upfirst</th>
+          <th class="hl">NeverMiss Hawaii</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="row-lbl">Monthly cost</td>
+          <td>$3,000–$4,500</td>
+          <td>$200–$500</td>
+          <td>$39–$79 (DIY)</td>
+          <td class="hl">$300</td>
+        </tr>
+        <tr>
+          <td class="row-lbl">Answers every call</td>
+          <td><span class="tick">✓</span> Business hours</td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="tick">✓</span></td>
+          <td class="hl"><span class="tick">✓</span> 24/7</td>
+        </tr>
+        <tr>
+          <td class="row-lbl">Books appointments</td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="cross">✗</span> Messages only</td>
+          <td><span class="cross">✗</span></td>
+          <td class="hl"><span class="tick">✓</span></td>
+        </tr>
+        <tr>
+          <td class="row-lbl">Done-for-you setup</td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="cross">✗</span> You configure it</td>
+          <td class="hl"><span class="tick">✓</span> Anu builds everything</td>
+        </tr>
+        <tr>
+          <td class="row-lbl">Review generation</td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="cross">✗</span></td>
+          <td class="hl"><span class="tick">✓</span> Included</td>
+        </tr>
+        <tr>
+          <td class="row-lbl">Hawaii-founded &amp; operated</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="cross">✗</span> National, remote</td>
+          <td class="hl"><span class="tick">✓</span> Only one</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── CTA Footer ─────────────────────────────────────── -->
+  <div class="cta-footer">
+    <div class="cta-main">
+      <div class="cta-headline">Ready to stop missing calls?</div>
+      <div class="cta-sub">Schedule a 30-minute setup call. Free for the next 5 customers. No credit card. Live in 48 hours.</div>
+    </div>
+    <a href="https://cal.com/anu-kama-6z0iyl/15min" class="cta-button">Start Free Trial</a>
+  </div>
+
+</div>
+</body>
+</html>
